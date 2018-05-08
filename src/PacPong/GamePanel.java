@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage bulletImg;
 
 	public GamePanel() {
-		timer = new Timer(1000 / 15, this);
+		timer = new Timer(1000 / 30, this);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		stringFont = new Font("Arial", Font.PLAIN, 24);
 		bar = new Bar(25, 300, 25, 150);
@@ -79,17 +79,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				/ (Math.sqrt((pac.x - ball.x) * (pac.x - ball.x) + (pac.y - ball.y) * (pac.y - ball.y)));
 		pac.x += Math.round(xChange);
 		pac.y += Math.round(yChange);
-		if (ball.x == 825) {
+		if (ball.x == 960) {
 			xSpeedBall = -xSpeedBall;
 		}
 		if (ball.y == 0) {
 			ySpeedBall = -ySpeedBall;
 		}
-		if (ball.y == 775) {
+		if (ball.y == 725) {
 			ySpeedBall = -ySpeedBall;
 		}
 		ball.x += xSpeedBall;
 		ball.y += ySpeedBall;
+		if (ball.x == 50) {
+			double d = 7 * (ball.x - bar.x) / (Math.sqrt(200 * 200 + 4 * (ball.x - bar.x) * (ball.x - bar.x))) + 5 / 2;
+			ySpeedBall = (int) Math.round(d);
+			xSpeedBall = (int) Math.round(Math.sqrt(49 - ySpeedBall * ySpeedBall));
+		}
 	}
 
 	void updateEndState() {
